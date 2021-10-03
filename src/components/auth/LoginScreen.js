@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { useForm } from '../../hooks/useForm';
-import { login } from '../../actions/auth';
+import { startLoginEmailPass } from '../../actions/auth';
 
 export const LoginScreen = () => {
 
@@ -20,7 +20,7 @@ export const LoginScreen = () => {
     const handleLogin = ( event ) => {
         event.preventDefault();
 
-        dispatch( login(123, 'Cristian') );    // Se manda login que devuelve uan action
+        dispatch( startLoginEmailPass( email, password) );    // Se manda login que devuelve uan action
     }
 
     return (
