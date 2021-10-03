@@ -1,0 +1,90 @@
+
+.journal__main-content {
+    display: flex;
+}
+
+.journal__sidebar {
+    background-color: $dark-blue;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;  // Para que solo se desplacen los items sobre el espacio en vista
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 450px;
+}
+
+.journal__sidebar-navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.journal__sidebar-navbar h3 {
+    font-weight: lighter;
+}
+
+.journal__new-entry {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 30px;
+    width: 100%;
+
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: lighten($color: $pink, $amount: 10);
+    }
+}
+
+.journal__entries {
+    margin-top: 30px;
+    flex: 1 1 auto;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar{   // Oculta la barra lateral
+        display: none;
+    }
+}
+
+.journal__entry {
+    background-color: white;
+    border-radius: 4px;
+    color: $dark-blue;
+    display: flex;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.journal__entry-picture {
+    height: 75px;
+    width: 100px;
+}
+
+.journal__entry-body {
+    padding: 10px;
+}
+
+.journal__entry-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.journal__entry-content {
+    font-size: 10px;
+}
+
+.journal__entry-date-box {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+}
+
+.journal__entry-date-box span {
+    font-size: 12px;
+}
+
