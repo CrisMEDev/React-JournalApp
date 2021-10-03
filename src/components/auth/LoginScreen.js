@@ -1,12 +1,33 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { useForm } from '../../hooks/useForm';
+import { login } from '../../actions/auth';
+
 export const LoginScreen = () => {
+
+    // Aplicar la accion al reducer en el store con el hook de dispatch
+    const dispatch = useDispatch();
+
+    const [ formValues, handleInputChange ] = useForm({
+        email: 'test1@test.com',
+        password: '123456'
+    });
+
+    const { email, password } = formValues;
+
+    const handleLogin = ( event ) => {
+        event.preventDefault();
+
+        dispatch( login(123, 'Cristian') );    // Se manda login que devuelve uan action
+    }
+
     return (
         <>
             <h3 className="auth__title">Login</h3>
 
-            <form>
+            <form onSubmit={ handleLogin }>
 
                 <input
                     type="text"
@@ -14,6 +35,8 @@ export const LoginScreen = () => {
                     name="email"
                     className="auth__input"
                     autoComplete="off"
+                    value={ email }
+                    onChange={ handleInputChange }
                 />
 
                 <input
@@ -21,6 +44,8 @@ export const LoginScreen = () => {
                     placeholder="Password"
                     name="password"
                     className="auth__input"
+                    value={ password }
+                    onChange={ handleInputChange }
                 />
 
                 <button
