@@ -89,5 +89,21 @@ export const login = (uid, displayName) => ({
         uid,
         displayName
     }
+});
+
+export const startLogout = () => {
+    return async( dispatch ) => {
+
+        const auth = getAuth();
+
+        await auth.signOut();   // Terminar la sesión en firebase
+
+        dispatch( logout() );
+
+    }
+}
+
+export const logout = () => ({
+    type: types.logout
 })
 
