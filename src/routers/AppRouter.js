@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     BrowserRouter as Router,
     Route,
@@ -15,6 +15,8 @@ import { login } from '../actions/auth';
 export const AppRouter = () => {
 
     const dispatch = useDispatch();
+    const [checking, setChecking] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         
@@ -24,12 +26,25 @@ export const AppRouter = () => {
 
             if ( user?.uid ){
                 dispatch( login( user.uid, user.displayName ) );
+
+                setIsLoggedIn( true );
             }
+            else {
+                setIsLoggedIn( false );
+            }
+
+            setChecking( false );
 
         });  // El método crea un observable; se dispra cuando el usuario
              // cada que el usuario haga una accion con login
 
-    }, [dispatch]);
+    }, [dispatch, setChecking]);
+
+    if ( checking ){
+        return (
+            <h1> Wait a moment, verifying credentials... </h1>
+        );
+    }
 
     return (
         <Router>
