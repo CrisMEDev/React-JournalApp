@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import validator from 'validator';
 import { Link } from 'react-router-dom';
 
@@ -9,8 +9,11 @@ import { setError, removeError } from '../../actions/ui';
 export const RegisterScreen = () => {
 
     const dispatch = useDispatch();
+    const uiState = useSelector(state => state.ui);
 
-    const [ formValues, handleInputChange ] = useForm({
+    // console.log(uiState);
+
+    const [formValues, handleInputChange] = useForm({
         name: 'Aurora',
         email: 'test1@test.com',
         password: '1234567',
@@ -19,10 +22,10 @@ export const RegisterScreen = () => {
 
     const { name, email, password, confirm } = formValues;
 
-    const handleRegister = ( event ) => {
+    const handleRegister = (event) => {
         event.preventDefault();
-        
-        if ( isFormValid() ){
+
+        if (isFormValid()) {
             console.log('Formulario correcto!');
         }
 
@@ -32,19 +35,19 @@ export const RegisterScreen = () => {
 
         if (validator.isEmpty(name)) {
             // console.log('Invalid name');
-            dispatch( setError('Invalid name') );
+            dispatch(setError('Invalid name'));
             return false;
         } else if (!validator.isEmail(email)) {
             // console.log('Invalid email');
-            dispatch( setError('Invalid email') );
+            dispatch(setError('Invalid email'));
             return false;
         } else if ((!validator.equals(password, confirm)) || password.length <= 5) {
             // console.log('Invalid password');
-            dispatch( setError('Invalid password') );
+            dispatch(setError('Invalid password'));
             return false;
         }
 
-        dispatch( removeError() );
+        dispatch(removeError());
         return true;
     }
 
@@ -52,7 +55,14 @@ export const RegisterScreen = () => {
         <>
             <h3 className="auth__title">Register</h3>
 
-            <form onSubmit={ handleRegister }>
+            <form onSubmit={handleRegister}>
+
+                {
+                    uiState.msgError &&
+                    <div className="auth__alert-error">
+                        { uiState.msgError }
+                    </div>
+                }
 
                 <input
                     type="text"
@@ -60,8 +70,8 @@ export const RegisterScreen = () => {
                     name="name"
                     className="auth__input"
                     autoComplete="off"
-                    value={ name }
-                    onChange={ handleInputChange }
+                    value={name}
+                    onChange={handleInputChange}
                 />
 
                 <input
@@ -70,8 +80,8 @@ export const RegisterScreen = () => {
                     name="email"
                     className="auth__input"
                     autoComplete="off"
-                    value={ email }
-                    onChange={ handleInputChange }
+                    value={email}
+                    onChange={handleInputChange}
                 />
 
                 <input
@@ -79,8 +89,8 @@ export const RegisterScreen = () => {
                     placeholder="Password"
                     name="password"
                     className="auth__input"
-                    value={ password }
-                    onChange={ handleInputChange }
+                    value={password}
+                    onChange={handleInputChange}
                 />
 
                 <input
@@ -88,8 +98,8 @@ export const RegisterScreen = () => {
                     placeholder="Confirm password"
                     name="confirm"
                     className="auth__input"
-                    value={ confirm }
-                    onChange={ handleInputChange }
+                    value={confirm}
+                    onChange={handleInputChange}
                 />
 
                 <button
