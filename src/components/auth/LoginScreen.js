@@ -1,14 +1,18 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import validator from 'validator'
 
 import { useForm } from '../../hooks/useForm';
 import { startGoogleLogin, startLoginEmailPass } from '../../actions/auth';
+import { setError, removeError } from '../../actions/ui';
 
 export const LoginScreen = () => {
 
     // Aplicar la accion al reducer en el store con el hook de dispatch
     const dispatch = useDispatch();
+
+    const uiState = useSelector(state => state.ui)
 
     const [ formValues, handleInputChange ] = useForm({
         email: 'test1@test.com',
@@ -20,7 +24,25 @@ export const LoginScreen = () => {
     const handleLogin = ( event ) => {
         event.preventDefault();
 
-        dispatch( startLoginEmailPass( email, password) );    // Se manda login que devuelve uan action
+        if (isFormValid()){
+            dispatch( startLoginEmailPass( email, password) );    // Se manda login que devuelve uan action
+        }
+
+    }
+
+    const isFormValid = () => {
+        if (!validator.isEmail(email)) {
+            // console.log('Invalid email');
+            dispatch(setError('Invalid email'));
+            return false;
+        } else if ( password.length <= 5 ) {
+            // console.log('Invalid password');
+            dispatch(setError('Invalid password'));
+            return false;
+        }
+
+        dispatch( removeError() );
+        return true;
     }
 
     const handleGoogleLogin = () => {
@@ -32,6 +54,13 @@ export const LoginScreen = () => {
             <h3 className="auth__title">Login</h3>
 
             <form onSubmit={ handleLogin }>
+
+                {
+                    uiState.msgError &&
+                    <div className="auth__alert-error">
+                        { uiState.msgError }
+                    </div>
+                }
 
                 <input
                     type="text"

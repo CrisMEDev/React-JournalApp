@@ -2,7 +2,8 @@ import {
     getAuth,
     signInWithPopup,
     createUserWithEmailAndPassword,
-    updateProfile
+    updateProfile,
+    signInWithEmailAndPassword
 } from 'firebase/auth';
 
 import { googleAuthProvider } from '../firebase/firebase-config';
@@ -12,9 +13,14 @@ export const startLoginEmailPass = ( email, password ) => {
 
     // El dispatch abajo es usado gracias al thunk(proveedor)
     return ( dispatch ) => {
-        setTimeout(() => {
-            dispatch( login( 123, 'Cristian' ) )
-        }, 3500)
+        const auth = getAuth();
+        signInWithEmailAndPassword( auth, email, password )
+            .then( ({ user }) => {
+                dispatch( login( user.uid, user.displayName ) );
+            })
+            .catch( e => {
+                console.log( e.code );
+            });
     }
 
 }
