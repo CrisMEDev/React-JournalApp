@@ -12,11 +12,12 @@ export const LoginScreen = () => {
     // Aplicar la accion al reducer en el store con el hook de dispatch
     const dispatch = useDispatch();
 
-    const uiState = useSelector(state => state.ui)
+    const uiState = useSelector(state => state.ui);
+    const uiLoading = useSelector( state => state.ui.loading );
 
     const [ formValues, handleInputChange ] = useForm({
         email: 'test1@test.com',
-        password: '123456'
+        password: '1234567'
     });
 
     const { email, password } = formValues;
@@ -84,6 +85,7 @@ export const LoginScreen = () => {
                 <button
                     className="btn buttons__btn-primary buttons__btn-block"
                     type="submit"
+                    disabled={ uiLoading }
                 >
                     Login
                 </button>
@@ -93,6 +95,7 @@ export const LoginScreen = () => {
                     <div
                         className="google-btn"
                         onClick={ handleGoogleLogin }
+                        disabled={ uiLoading }
                     >
                         <div className="google-icon-wrapper">
                             <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google button" />

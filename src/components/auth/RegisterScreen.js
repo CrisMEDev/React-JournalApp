@@ -11,6 +11,7 @@ export const RegisterScreen = () => {
 
     const dispatch = useDispatch();
     const uiState = useSelector(state => state.ui);
+    const uiLoading = useSelector(state => state.ui.loading);
 
     // console.log(uiState);
 
@@ -107,6 +108,7 @@ export const RegisterScreen = () => {
                 <button
                     className="btn buttons__btn-primary buttons__btn-block mb-5"
                     type="submit"
+                    disabled={ uiLoading }
                 >
                     Register
                 </button>
