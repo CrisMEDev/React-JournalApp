@@ -12,6 +12,7 @@ import { JournalScreen } from '../components/journal/JournalScreen';
 import { login } from '../actions/auth';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { startLoadingNotes } from '../actions/notes';
 
 export const AppRouter = () => {
 
@@ -23,10 +24,12 @@ export const AppRouter = () => {
         
         const auth = getAuth();
 
-        auth.onAuthStateChanged( (user) => {    // Si no se está autenticado, user es null
+        auth.onAuthStateChanged( async(user) => {    // Si no se está autenticado, user es null
 
             if ( user?.uid ){
                 dispatch( login( user.uid, user.displayName ) );
+
+                dispatch( startLoadingNotes( user.uid ) )  // Action: Carga las notas del usuario al store
 
                 setIsLoggedIn( true );
             }
