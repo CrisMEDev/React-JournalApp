@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 
 import { types } from "../types/types"
 import { finishLoading, startLoading } from './ui';
+import { notesLogout } from './notes';
 
 export const startLoginEmailPass = ( email, password ) => {
 
@@ -109,6 +110,7 @@ export const startLogout = () => {
         await auth.signOut();   // Terminar la sesión en firebase
 
         dispatch( logout() );
+        dispatch( notesLogout() );
 
     }
 }
