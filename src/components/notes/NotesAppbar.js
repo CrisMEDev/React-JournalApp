@@ -28,6 +28,8 @@ export const NotesAppbar = () => {
         if ( file ){
             dispatch( startUploading( file ) );
         }
+
+        document.querySelector('#fileSelector').value = ''; // Para porder cargar la imagen de nuevo, incluyendo otro usuario
     }
 
     return (

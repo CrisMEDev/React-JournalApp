@@ -22,6 +22,7 @@ export const startNewNote = () => {
         // console.log( docRef ); 
         
         dispatch( activeNote( docRef.id, newNote ) );
+        dispatch( addNewNote( docRef.id, newNote ) );
 
     }
 }
@@ -35,6 +36,14 @@ export const activeNote = ( id, note ) => ({
     }
     
 });
+
+export const addNewNote = ( id, note ) => ({
+    type: types.notesAddNew,
+    payload: {
+        id,
+        ...note
+    }
+})
 
 export const startLoadingNotes = ( uid ) => {
 
@@ -67,7 +76,12 @@ export const startSaveNote = ( note ) => {
 
         dispatch( refreshNote( note.id, noteToFirestore ) );
 
-        Swal.fire('Saved correctly', note.title, 'success');
+        Swal.fire({
+            title: 'Saved correctly',
+            html: note.title,
+            icon: 'success',
+            confirmButtonColor: '#3365FB'
+        });
 
     }
 }
@@ -97,7 +111,8 @@ export const startUploading = ( file ) => {
             willOpen: () => {
                 Swal.showLoading()
             },
-            showConfirmButton: false
+            showConfirmButton: false,
+            confirmButtonColor: '#3365FB'
         });
 
         const fileUrl = await fileUpload( file );
@@ -119,6 +134,12 @@ export const startDeleting = ( id ) => {
         await deleteDoc( docRef );
 
         dispatch( deleteNote( id ) );
+
+        Swal.fire({
+            title: 'Deleted correctly',
+            icon: 'success',
+            confirmButtonColor: '#3365FB'
+        });
 
     }
 }
