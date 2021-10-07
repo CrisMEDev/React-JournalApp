@@ -23,3 +23,5 @@ Para trabajar con SASS usar: `npm install --save-dev sass`
 [validator](https://www.npmjs.com/package/validator)
 
 [SweetAlert2](https://sweetalert2.github.io/#download)
+
+[momentjs](https://momentjs.com/)
