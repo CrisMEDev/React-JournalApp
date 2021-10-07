@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 
 import { loadNotes } from '../helpers/loadNotes';
 import { types } from '../types/types';
+import { fileUpload } from '../helpers/fileUpload';
 
 export const startNewNote = () => {
     return async( dispatch, getState ) => {
@@ -82,5 +83,30 @@ export const refreshNote = ( id, note ) => ({
         }
     }
 
-})
+});
+
+export const startUploading = ( file ) => {
+    return async( dispatch, getState ) => {
+
+        const { active: activeN } = getState().notes;
+
+        Swal.fire({
+            title: 'Uploading...',
+            text: 'Please wait',
+            allowOutsideClick: false,
+            willOpen: () => {
+                Swal.showLoading()
+            },
+            showConfirmButton: false
+        });
+
+        const fileUrl = await fileUpload( file );
+        activeN.url = fileUrl;  // Se actualiza la url del img del user
+
+        dispatch( startSaveNote( activeN ) );
+
+        Swal.close();
+
+    }
+}
 

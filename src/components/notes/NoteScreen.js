@@ -63,7 +63,7 @@ export const NoteScreen = () => {
                         activeN.url &&
                         <div className="notes__image">
                             <img
-                                src="https://i.pinimg.com/474x/cf/8c/9d/cf8c9d075a37c13302f0cb5f6379a508.jpg"
+                                src={ activeN.url }
                                 alt="Cannot show"
                             />
                         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { startSaveNote } from '../../actions/notes';
+import { startSaveNote, startUploading } from '../../actions/notes';
 
 export const NotesAppbar = () => {
 
@@ -15,13 +15,39 @@ export const NotesAppbar = () => {
 
     }
 
+    const handlePictureUpload = () => {
+        // Simula un click en el input file oculto
+        // para que el usuario seleccione su imagen
+        document.querySelector('#fileSelector').click();
+    }
+
+    const handleFileChange = (e) => {
+        // console.log(e);  // target.files
+        const file = e.target.files[0];
+
+        if ( file ){
+            dispatch( startUploading( file ) );
+        }
+    }
+
     return (
         <div className="notes__appbar">
             
             <span>19 de diciembre 2021</span>
 
+            <input
+                id="fileSelector"
+                type="file"
+                name="file" // Para que aparezca en el event con el target.name
+                style={{ display: 'none' }}
+                onChange={ handleFileChange }
+            />
+
             <div>
-                <button className="btn">
+                <button
+                    className="btn"
+                    onClick={ handlePictureUpload }
+                >
                     Picture
                 </button>
 
