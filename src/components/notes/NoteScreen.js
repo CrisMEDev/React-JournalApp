@@ -1,35 +1,38 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useForm } from '../../hooks/useForm';
 import { NotesAppbar } from './NotesAppbar';
+import { activeNote } from '../../actions/notes';
 
 export const NoteScreen = () => {
 
-    const activeNote = useSelector(state => state.notes.active);
+    const activeN = useSelector(state => state.notes.active);
+    const dispatch = useDispatch();
 
-    const [ formValues, handleInputChange, reset ] = useForm({
-        noteTitle: activeNote.title,
-        noteBody: activeNote.body
-    });
+    const [ formValues, handleInputChange, reset ] = useForm( activeN );
 
-    const { noteTitle, noteBody } = formValues;
+    const { title, body } = formValues;
 
-    // useRef usado para mantener la referencia a esta varialbe mutable (activeNote.id)
+    // useRef usado para mantener la referencia a esta varialbe mutable (activeN.id)
     // que no redibuja todo el componente si cambia
-    const activeId = useRef( activeNote.id );
+    const activeId = useRef( activeN.id );
 
     useEffect(() => {
         
-        if ( activeNote.id !== activeId.current ){
-            reset({
-                noteTitle: activeNote.title,
-                noteBody: activeNote.body
-            });
-            activeId.current = activeNote.id;
+        if ( activeN.id !== activeId.current ){
+            reset( activeN );
+            activeId.current = activeN.id;
         }
 
-    }, [ activeNote, reset ]);
+    }, [ activeN, reset ]);
+
+    // Efecto que mantiene la nota activa actualizada en el store
+    useEffect(() => {
+        
+        dispatch( activeNote( formValues.id, { ...formValues } ) );
+
+    }, [formValues, dispatch]);
     
     return (
         <div className="notes__main-content">
@@ -43,21 +46,21 @@ export const NoteScreen = () => {
                         placeholder="Some good title"
                         className="notes__title_input"
                         autoComplete="off"
-                        name="noteTitle"
-                        value={ noteTitle }
+                        name="title"
+                        value={ title }
                         onChange={ handleInputChange }
                     />
 
                     <textarea
                         placeholder="What do you need to write today?"
                         className="notes__textarea"
-                        name="noteBody"
-                        value={ noteBody }
+                        name="body"
+                        value={ body }
                         onChange={ handleInputChange }
                     ></textarea>
 
                     {
-                        activeNote.url &&
+                        activeN.url &&
                         <div className="notes__image">
                             <img
                                 src="https://i.pinimg.com/474x/cf/8c/9d/cf8c9d075a37c13302f0cb5f6379a508.jpg"

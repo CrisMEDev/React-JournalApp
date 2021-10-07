@@ -1,4 +1,4 @@
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc } from 'firebase/firestore';
 
 import { db } from '../firebase/firebase-config';
 import { loadNotes } from '../helpers/loadNotes';
@@ -48,4 +48,21 @@ export const setNotes =  ( notes ) => ({
     type: types.notesLoad,
     payload: notes
 })
+
+export const startSaveNote = ( note ) => {
+    return async( dispatch, getState ) => {
+
+        const { uid } = getState().auth;    // getState nos ayuda a obtener el estado del store
+
+        if ( !note.url ) delete note.url;
+
+        const noteToFirestore = { ...note };
+        delete noteToFirestore.id;  // Firestore ya tiene referenciado el doc por lo cual no se requiere
+                                    // tenerlo como propiedad nuevamente
+
+        const docRef = doc( db, `${ uid }/journal/notes/${ note.id }` );
+        await updateDoc( docRef, noteToFirestore );
+
+    }
+}
 
