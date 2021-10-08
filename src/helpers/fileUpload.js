@@ -1,12 +1,10 @@
-import { cloudinary, cloudinaryUploadPreset } from "../keys/keys";
-
 export const fileUpload = async( file ) => {
 
-    const cloudUrl = cloudinary;
+    const cloudUrl = process.env.REACT_APP_CLOUDINARY_URL;
 
     const formData = new FormData();
 
-    formData.append('upload_preset', cloudinaryUploadPreset);
+    formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
     formData.append('file', file);
     // formData.append('folder', 'journal-app');    // Save files in an specific directory
 
