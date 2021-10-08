@@ -14,6 +14,7 @@ export const NotesAppbar = () => {
     const handleSave = () => {
 
         // console.log( noteAct );
+        noteAct.date = new Date().getTime();    // Actualiza la fecha de la nota al guardarla
         dispatch( startSaveNote( noteAct ) );
 
     }
