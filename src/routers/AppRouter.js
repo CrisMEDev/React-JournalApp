@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-    BrowserRouter as Router,
+    BrowserRouter as Router,    // Cambiar BrowserRouter por el HashRouter cuando se haga el despliegue en github
     Switch,
     Redirect
 } from 'react-router-dom';
