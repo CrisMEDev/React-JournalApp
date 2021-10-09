@@ -4,6 +4,15 @@
 
 Para trabajar con SASS usar: `npm install --save-dev sass`
 
+## Notas
+
+Para despliqgues en github actualizar el homepage del package.json con "./"
+
+Para despliqgues en github usar el HashRouter en lugar del BrowserRouter
+
+Usando un server con express no hay necesidad del homepage
+
+
 ## Documentación
 
 [SASS](https://www.npmjs.com/package/sass)
